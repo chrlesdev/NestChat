@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NestChat 🐦💬
+
+NestChat is a real-time chat application built with Next.js that enables instant messaging between authenticated users using a Redis-based pub/sub system.
+A real-time chat app using Google OAuth, Redis pub/sub, and WebSockets for instant message delivery.
+Users sign in with Google authentication, connect with other users, and exchange messages in real time through a modern and responsive interface.
+This project was created as a personal exploration of real-time communication, authentication flows, and scalable messaging architecture using modern web technologies.
+
+---
+
+## Features
+
+- Google authentication using NextAuth
+- Real-time messaging with Socket.io
+- Redis (Upstash) pub/sub for fast message broadcasting
+- Automatic message updates across connected clients
+- Responsive UI with Tailwind CSS and ShadCN UI
+- Fully typed codebase with TypeScript
+
+---
+
+## Architecture
+
+NestChat uses a Redis-backed pub/sub model combined with WebSockets to handle real-time messaging.
+
+- Socket.io maintains persistent client connections
+- Redis (Upstash) acts as a message broker
+- Messages are published to Redis channels
+- Subscribed clients receive updates instantly
+
+This design allows the system to scale horizontally without tightly coupling clients to each other.
+
+---
+
+## Tech Stack
+
+- **Framework**: Next.js
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS, ShadCN UI
+- **Authentication**: NextAuth (Google Provider)
+- **Real-time**: Socket.io
+- **Messaging Layer**: Redis (Upstash)
+
+---
+
+## How It Works
+
+1. Users sign in using their Google account.
+2. After authentication, the client establishes a WebSocket connection.
+3. Messages are published to Redis channels.
+4. Redis broadcasts messages to all subscribed clients.
+5. Connected users receive messages instantly without page refreshes.
+
+This architecture keeps message delivery fast, scalable, and decoupled from the UI layer.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v18 or newer recommended)
+- Upstash Redis account
+- Google OAuth credentials
+
+---
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/nestchat.git
+cd nestchat
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret
 
-## Learn More
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
 
-To learn more about Next.js, take a look at the following resources:
+UPSTASH_REDIS_REST_URL=your-redis-url
+UPSTASH_REDIS_REST_TOKEN=your-redis-token
+```
+### Run the App
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Status
 
-## Deploy on Vercel
+This project is currently not fully functional due to changes in Upstash Redis channel and pub/sub behavior.
+To restore real-time messaging, the Redis pub/sub implementation needs to be updated to align with the latest Upstash Redis API and channel configuration.
+Despite this, the overall architecture, authentication flow, and real-time design remain valid and intentionally documented.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
